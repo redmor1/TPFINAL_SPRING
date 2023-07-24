@@ -47,4 +47,18 @@ public class JuegoServiceJPAImpl implements JuegoService {
         return completedJuegosDTOs;
     }
 
+    @Override
+    public List<JuegoResponseDTO> getAllDevelopingJuegos() {
+        List<Juego> developingJuegos = juegoRepository.findByFechaLanzamientoAfter(LocalDate.now());
+
+        List<JuegoResponseDTO> developingJuegosDTOs = new ArrayList<>();
+
+        for (Juego juego : developingJuegos) {
+            JuegoResponseDTO juegoDTO = juegoResponseMapper.convertJuegoToJuegoResponseDTO(juego);
+            developingJuegosDTOs.add(juegoDTO);
+        }
+
+        return developingJuegosDTOs;
+    }
+
 }

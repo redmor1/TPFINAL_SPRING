@@ -34,8 +34,13 @@ public class JuegoController {
         return new ResponseEntity(juegoCreated, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<JuegoResponseDTO> getCompletedJuegos() {
+    @GetMapping(params = "status=developing")
+    public List<JuegoResponseDTO> getAllDevelopingJuegos() {
+        return juegoService.getAllDevelopingJuegos();
+    }
+
+    @GetMapping(params = "status=completed")
+    public List<JuegoResponseDTO> getAllCompletedJuegos() {
         return juegoService.getAllCompletedJuegos();
     }
 

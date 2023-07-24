@@ -10,5 +10,7 @@ public interface JuegoService {
 
     public Juego createJuego(JuegoDTO juego);
 
+    public List<JuegoResponseDTO> getAllDevelopingJuegos();
+
     public List<JuegoResponseDTO> getAllCompletedJuegos();
 }
