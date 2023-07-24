@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,12 +31,12 @@ public class Tarea {
     @Column(length = 600, columnDefinition = "varchar(600)", updatable = true, nullable = false)
     private String descripcion;
 
-    @Column(updatable = false, nullable = false)
     @ManyToOne
+    @JoinColumn(name = "juego_id")
     private Juego juego;
 
-    @Column(updatable = true, nullable = false)
     @ManyToOne
+    @JoinColumn(name = "desarrollador_responsable_id")
     private Desarrollador desarrolladorResponsable;
 
     @Column(updatable = true, nullable = false)
