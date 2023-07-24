@@ -1,0 +1,53 @@
+package com.informatorio.tpfinalspring.domain;
+
+import java.time.LocalDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+public class Tarea {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 600, columnDefinition = "varchar(600)", updatable = true, nullable = false)
+    private String descripcion;
+
+    @Column(updatable = false, nullable = false)
+    @ManyToOne
+    private Juego juego;
+
+    @Column(updatable = true, nullable = false)
+    @ManyToOne
+    private Desarrollador desarrolladorResponsable;
+
+    @Column(updatable = true, nullable = false)
+    private LocalDate fechaLimite;
+
+    @Column(updatable = true, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    private enum Estado {
+        PENDIENTE,
+        EN_PROGRESO,
+        COMPLETADA
+    }
+}
