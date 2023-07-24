@@ -15,4 +15,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class JuegoServiceJPAImpl implements JuegoService {
 
+    @Autowired
+    JuegoMapper juegoMapper;
+    JuegoRepository juegoRepository;
+
+    @Override
+    public Juego createJuego(JuegoDTO juego) {
+        Juego juegoCreated = juegoMapper.convertJuegoDTOToJuego(juego);
+        juegoRepository.save(juegoCreated);
+        return juegoCreated;
+    }
+
 }
