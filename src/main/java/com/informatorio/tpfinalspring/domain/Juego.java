@@ -31,7 +31,7 @@ public class Juego {
     @Column(length = 100, columnDefinition = "varchar(100)", updatable = true, nullable = false)
     private String titulo;
 
-    @Column(length = 200, columnDefinition = "varchar(200)", updatable = false, nullable = false)
+    @Column(length = 200, columnDefinition = "varchar(200)", updatable = true, nullable = false)
     private String descripcion;
 
     @OneToMany
@@ -41,6 +41,6 @@ public class Juego {
     @OneToMany(mappedBy = "juego")
     private List<Tarea> tareas = new ArrayList<>();
 
-    @Column
+    @Column(length = 200, updatable = true, nullable = false)
     private LocalDate fechaLanzamiento;
 }
