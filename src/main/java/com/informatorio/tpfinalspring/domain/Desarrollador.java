@@ -35,7 +35,7 @@ public class Desarrollador {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    private enum Rol {
+    public enum Rol {
         DEV,
         QA,
         DEV_OPS
