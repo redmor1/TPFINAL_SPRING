@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +41,7 @@ public class Juego {
     private List<Desarrollador> desarrolladores;
 
     @OneToMany(mappedBy = "juego")
+    @JsonManagedReference
     private List<Tarea> tareas = new ArrayList<>();
 
     @Column(length = 200, updatable = true, nullable = false)

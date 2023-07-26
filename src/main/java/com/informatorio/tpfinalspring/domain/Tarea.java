@@ -2,6 +2,8 @@ package com.informatorio.tpfinalspring.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,6 +35,7 @@ public class Tarea {
 
     @ManyToOne
     @JoinColumn(name = "juego_id")
+    @JsonBackReference
     private Juego juego;
 
     @ManyToOne
@@ -46,7 +49,7 @@ public class Tarea {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    private enum Estado {
+    public enum Estado {
         PENDIENTE,
         EN_PROGRESO,
         COMPLETADA
