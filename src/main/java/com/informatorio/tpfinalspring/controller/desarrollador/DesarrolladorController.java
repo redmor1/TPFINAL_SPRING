@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/desarrollador")
+@RequestMapping("/api/v1/desarrolladores")
 public class DesarrolladorController {
 
     @Autowired

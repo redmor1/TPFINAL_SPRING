@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/juego")
+@RequestMapping("/api/v1/juegos")
 public class JuegoController {
 
     @Autowired
