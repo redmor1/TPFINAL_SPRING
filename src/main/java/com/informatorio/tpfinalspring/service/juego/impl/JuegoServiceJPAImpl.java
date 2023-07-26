@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.informatorio.tpfinalspring.domain.Desarrollador;
@@ -20,6 +21,7 @@ import com.informatorio.tpfinalspring.repository.desarrollador.DesarrolladorRepo
 import com.informatorio.tpfinalspring.repository.juego.JuegoRepository;
 import com.informatorio.tpfinalspring.service.juego.JuegoService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -83,6 +85,25 @@ public class JuegoServiceJPAImpl implements JuegoService {
             return Optional.of(desarrolladoresDTOs);
         } else {
             return Optional.empty();
+        }
+
+    }
+
+    @Override
+    public void putDesarrolladorInJuego(Long juegoId, Long desarrolladorId) {
+        Optional<Juego> juegoSelected = juegoRepository.findById(juegoId);
+        Optional<Desarrollador> desarrolladorSelected = desarrolladorRepository.findById(desarrolladorId);
+        // TODO: revisar la logica aca y ver q devolver
+        if (juegoSelected.isPresent() && desarrolladorSelected.isPresent()) {
+            if (!juegoSelected.get().getDesarrolladores().contains(desarrolladorSelected.get()))
+                juegoSelected.get().getDesarrolladores().add(desarrolladorSelected.get());
+            juegoRepository.save(juegoSelected.get());
+        } else {
+            if (!juegoSelected.isPresent()) {
+                throw new EntityNotFoundException("Juego with ID " + juegoId + " not found");
+            } else {
+                throw new EntityNotFoundException("Desarrollador with ID " + desarrolladorId + " not found");
+            }
         }
 
     }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import com.informatorio.tpfinalspring.model.dto.juego.JuegoResponseDTO;
 import com.informatorio.tpfinalspring.service.juego.JuegoService;
 
 import io.micrometer.core.ipc.http.HttpSender.Response;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -51,6 +53,16 @@ public class JuegoController {
     public List<DesarrolladorResponseDTO> getAllDesarrolladoresFromJuego(@PathVariable(value = "juegoId") Long juegoId)
             throws NotFoundException {
         return juegoService.getAllDesarrolladoresFromJuego(juegoId).orElseThrow(NotFoundException::new);
+    }
+
+    @PutMapping("/{juegoId}/desarrolladores/{desarrolladorId}")
+    public ResponseEntity putDesarrolladorInJuego(
+            @PathVariable Long juegoId,
+            @PathVariable Long desarrolladorId) {
+        juegoService.putDesarrolladorInJuego(juegoId, desarrolladorId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+
     }
 
 }

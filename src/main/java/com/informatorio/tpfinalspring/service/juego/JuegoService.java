@@ -17,4 +17,6 @@ public interface JuegoService {
     public List<JuegoResponseDTO> getAllCompletedJuegos();
 
     public Optional<List<DesarrolladorResponseDTO>> getAllDesarrolladoresFromJuego(Long juegoId);
+
+    public void putDesarrolladorInJuego(Long juegoId, Long desarrolladorId);
 }
