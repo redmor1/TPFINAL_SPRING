@@ -1,4 +1,6 @@
-package com.informatorio.tpfinalspring.model.dto.juego;
+package com.informatorio.tpfinalspring.model.dto.tarea;
+
+import com.informatorio.tpfinalspring.domain.Tarea.Estado;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JuegoResponseDTO {
-    private Long id;
-    private String titulo;
+public class TareaResponseDTO {
     private String descripcion;
-    private String fechaLanzamiento;
+    private String fechaLimite;
+    private Estado estado;
+
 }

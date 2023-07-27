@@ -12,7 +12,7 @@ import com.informatorio.tpfinalspring.domain.Juego;
 @Repository
 public interface JuegoRepository extends JpaRepository<Juego, Long> {
 
-    public List<Juego> findByFechaLanzamientoBefore(LocalDate date);
+    public List<Juego> findByFechaLanzamientoLessThanEqual(LocalDate date);
 
     public List<Juego> findByFechaLanzamientoAfter(LocalDate date);
 

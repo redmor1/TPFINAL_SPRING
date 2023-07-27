@@ -44,7 +44,7 @@ public class JuegoServiceJPAImpl implements JuegoService {
 
     @Override
     public List<JuegoResponseDTO> getAllCompletedJuegos() {
-        List<Juego> completedJuegos = juegoRepository.findByFechaLanzamientoBefore(LocalDate.now());
+        List<Juego> completedJuegos = juegoRepository.findByFechaLanzamientoLessThanEqual(LocalDate.now());
 
         List<JuegoResponseDTO> completedJuegosDTOs = new ArrayList<>();
 

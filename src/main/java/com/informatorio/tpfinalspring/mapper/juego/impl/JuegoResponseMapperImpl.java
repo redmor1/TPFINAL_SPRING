@@ -14,6 +14,7 @@ public class JuegoResponseMapperImpl implements JuegoResponseMapper {
     @Override
     public JuegoResponseDTO convertJuegoToJuegoResponseDTO(Juego juego) {
         return JuegoResponseDTO.builder()
+                .id(juego.getId())
                 .titulo(juego.getTitulo())
                 .descripcion(juego.getDescripcion())
                 .fechaLanzamiento(juego.getFechaLanzamiento().format(DateTimeFormatter.ISO_LOCAL_DATE))
