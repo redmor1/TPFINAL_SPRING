@@ -7,4 +7,5 @@ public interface TareaMapper {
     public Tarea convertTareaDTOtoTarea(TareaDTO tareaDTO);
 
     public TareaDTO convertTareaToTareaDTO(Tarea tarea);
+
 }

@@ -5,17 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
+import com.informatorio.tpfinalspring.model.dto.tarea.TareaEstadoDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaResponseDTO;
 import com.informatorio.tpfinalspring.service.tarea.TareaService;
 
@@ -42,6 +43,12 @@ public class TareaController {
     public List<TareaResponseDTO> getAllTareasFromDesarrollador(@PathVariable Long desarrolladorId)
             throws NotFoundException {
         return tareaService.getAllTareasFromDesarrollador(desarrolladorId).orElseThrow(NotFoundException::new);
+    }
+
+    @PutMapping("/{tareaId}/estado")
+    public ResponseEntity updateEstadoInTarea(@PathVariable Long tareaId, @RequestBody TareaEstadoDTO tareaEstadoDTO) {
+        tareaService.updateEstadoInTarea(tareaId, tareaEstadoDTO.getEstado());
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

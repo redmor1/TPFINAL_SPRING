@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.informatorio.tpfinalspring.domain.Desarrollador;
 import com.informatorio.tpfinalspring.domain.Juego;
 import com.informatorio.tpfinalspring.domain.Tarea;
+import com.informatorio.tpfinalspring.domain.Tarea.Estado;
 import com.informatorio.tpfinalspring.mapper.tarea.TareaMapper;
 import com.informatorio.tpfinalspring.mapper.tarea.TareaResponseMapper;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
@@ -20,6 +22,7 @@ import com.informatorio.tpfinalspring.repository.juego.JuegoRepository;
 import com.informatorio.tpfinalspring.repository.tarea.TareaRepository;
 import com.informatorio.tpfinalspring.service.tarea.TareaService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -71,6 +74,18 @@ public class TareaServiceJPAImpl implements TareaService {
             return Optional.empty();
         }
 
+    }
+
+    @Override
+    public void updateEstadoInTarea(Long tareaId, Estado estado) {
+        // TODO: revisar la logica aca y ver q hay q devolver
+        Optional<Tarea> tareaSelected = tareaRepository.findById(tareaId);
+        if (tareaSelected.isPresent()) {
+            tareaSelected.get().setEstado(estado);
+            tareaRepository.save(tareaSelected.get());
+        } else {
+            throw new EntityNotFoundException("Tarea with ID " + tareaId + " not found");
+        }
     }
 
 }

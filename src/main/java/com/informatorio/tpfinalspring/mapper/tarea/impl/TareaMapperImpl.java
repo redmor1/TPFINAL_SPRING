@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.mapper.tarea.TareaMapper;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
+import com.informatorio.tpfinalspring.model.dto.tarea.TareaEstadoDTO;
 
 @Component
 public class TareaMapperImpl implements TareaMapper {
