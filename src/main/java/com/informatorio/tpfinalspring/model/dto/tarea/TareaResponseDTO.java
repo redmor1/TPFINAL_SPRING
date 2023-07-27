@@ -14,6 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class TareaResponseDTO {
+
+    private Long id;
     private String descripcion;
     private String fechaLimite;
     private Estado estado;
