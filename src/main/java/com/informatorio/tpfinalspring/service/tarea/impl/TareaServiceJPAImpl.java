@@ -106,4 +106,25 @@ public class TareaServiceJPAImpl implements TareaService {
         }
     }
 
+    @Override
+    public Optional<List<TareaResponseDTO>> getAllTareasFromJuego(Long juegoId) {
+        Optional<Juego> juegoSelected = juegoRepository.findById(juegoId);
+
+        List<TareaResponseDTO> tareaResponseDTOs = new ArrayList<>();
+
+        if (juegoSelected.isPresent()) {
+            List<Tarea> tareas = tareaRepository.findByJuego(juegoSelected.get());
+
+            for (Tarea tarea : tareas) {
+                TareaResponseDTO tareaConverted = tareaResponseMapper.convertTareaToTareaResponseDTO(tarea);
+                tareaResponseDTOs.add(tareaConverted);
+            }
+
+            return Optional.of(tareaResponseDTOs);
+
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

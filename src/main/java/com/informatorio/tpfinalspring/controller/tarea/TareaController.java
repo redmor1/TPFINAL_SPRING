@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.domain.Tarea.Estado;
@@ -56,6 +57,12 @@ public class TareaController {
     public List<TareaResponseDTO> getAllTareasFromDesarrollador(@PathVariable Long desarrolladorId)
             throws NotFoundException {
         return tareaService.getAllTareasFromDesarrollador(desarrolladorId).orElseThrow(NotFoundException::new);
+    }
+
+    @GetMapping("/juego/{juegoId}")
+    public List<TareaResponseDTO> getAllTareasFromJuego(@PathVariable Long juegoId) throws NotFoundException {
+
+        return tareaService.getAllTareasFromJuego(juegoId).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping("/{tareaId}/estado")

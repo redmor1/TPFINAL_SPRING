@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.informatorio.tpfinalspring.domain.Desarrollador;
+import com.informatorio.tpfinalspring.domain.Juego;
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.domain.Tarea.Estado;
 
@@ -14,6 +15,8 @@ import com.informatorio.tpfinalspring.domain.Tarea.Estado;
 public interface TareaRepository extends JpaRepository<Tarea, Long> {
 
     public List<Tarea> findByDesarrolladorResponsable(Desarrollador desarrolladorResponsable);
+
+    public List<Tarea> findByJuego(Juego juego);
 
     public List<Tarea> findByEstado(Estado estado);
 
