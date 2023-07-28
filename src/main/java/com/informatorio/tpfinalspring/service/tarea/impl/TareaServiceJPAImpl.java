@@ -1,5 +1,6 @@
 package com.informatorio.tpfinalspring.service.tarea.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -85,6 +86,23 @@ public class TareaServiceJPAImpl implements TareaService {
             tareaRepository.save(tareaSelected.get());
         } else {
             throw new EntityNotFoundException("Tarea with ID " + tareaId + " not found");
+        }
+    }
+
+    @Override
+    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite) {
+
+        List<Tarea> tareas;
+
+        if (estado != null) {
+            tareas = tareaRepository.findByEstado(estado);
+            return tareas;
+        } else if (fechaLimite != null) {
+            tareas = tareaRepository.findByFechaLimite(fechaLimite);
+            return tareas;
+        } else {
+            tareas = tareaRepository.findAll();
+            return tareas;
         }
     }
 

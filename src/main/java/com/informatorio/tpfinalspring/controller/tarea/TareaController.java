@@ -1,9 +1,11 @@
 package com.informatorio.tpfinalspring.controller.tarea;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatorio.tpfinalspring.domain.Tarea;
+import com.informatorio.tpfinalspring.domain.Tarea.Estado;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaEstadoDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaResponseDTO;
@@ -29,6 +33,15 @@ public class TareaController {
 
     @Autowired
     TareaService tareaService;
+
+    @GetMapping
+    public ResponseEntity<List<Tarea>> getAllTareas(
+            @RequestParam(required = false) Estado estado,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaLimite) {
+
+        List<Tarea> tareas = tareaService.getAllTareas(estado, fechaLimite);
+        return ResponseEntity.ok(tareas);
+    }
 
     @PostMapping("/juego/{juegoId}/desarrollador/{desarrolladorId}")
     public ResponseEntity<Tarea> createTareaWithJuegoAndDesarrollador(@PathVariable Long juegoId,

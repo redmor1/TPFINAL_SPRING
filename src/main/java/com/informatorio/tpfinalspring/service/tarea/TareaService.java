@@ -1,5 +1,6 @@
 package com.informatorio.tpfinalspring.service.tarea;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,4 +19,6 @@ public interface TareaService {
     public Optional<List<TareaResponseDTO>> getAllTareasFromDesarrollador(Long desarrolladorId);
 
     public void updateEstadoInTarea(Long tareaId, Estado estado);
+
+    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite);
 }
