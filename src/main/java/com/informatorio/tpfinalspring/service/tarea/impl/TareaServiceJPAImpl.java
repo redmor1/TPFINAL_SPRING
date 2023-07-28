@@ -94,7 +94,7 @@ public class TareaServiceJPAImpl implements TareaService {
 
         List<Tarea> tareas;
 
-        if (fueraDelPlazo) {
+        if (fueraDelPlazo != null && fueraDelPlazo) {
 
             List<Tarea> tareasPendientes = tareaRepository.findByEstadoAndFechaLimiteBefore(Estado.PENDIENTE,
                     LocalDate.now());

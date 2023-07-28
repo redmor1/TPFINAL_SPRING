@@ -44,10 +44,10 @@ public class TareaController {
         // TODO: por ahora, para limitar la logica
         if (estado != null && fechaLimite != null) {
             return ResponseEntity.badRequest().body("Cannot provide both 'estado' and 'fechaLimite' query parameters");
-        } else if (fueraDePlazo && fechaLimite != null) {
+        } else if (fueraDePlazo != null && fechaLimite != null) {
             return ResponseEntity.badRequest()
                     .body("Cannot provide both 'fueraDePlazo' and 'fechaLimite' query parameters");
-        } else if (fueraDePlazo && estado != null) {
+        } else if (fueraDePlazo != null && estado != null) {
             return ResponseEntity.badRequest().body("Cannot provide both 'fueraDePlazo' and 'estado' query parameters");
         }
 
