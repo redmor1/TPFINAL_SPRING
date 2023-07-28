@@ -90,11 +90,23 @@ public class TareaServiceJPAImpl implements TareaService {
     }
 
     @Override
-    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite) {
+    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite, Boolean fueraDelPlazo) {
 
         List<Tarea> tareas;
 
-        if (estado != null) {
+        if (fueraDelPlazo) {
+
+            List<Tarea> tareasPendientes = tareaRepository.findByEstadoAndFechaLimiteBefore(Estado.PENDIENTE,
+                    LocalDate.now());
+            List<Tarea> tareasEnProgreso = tareaRepository.findByEstadoAndFechaLimiteBefore(Estado.EN_PROGRESO,
+                    LocalDate.now());
+
+            List<Tarea> combinedTareas = new ArrayList<>();
+            combinedTareas.addAll(tareasPendientes);
+            combinedTareas.addAll(tareasEnProgreso);
+
+            return combinedTareas;
+        } else if (estado != null) {
             tareas = tareaRepository.findByEstado(estado);
             return tareas;
         } else if (fechaLimite != null) {

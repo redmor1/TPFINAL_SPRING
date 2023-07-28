@@ -36,11 +36,22 @@ public class TareaController {
     TareaService tareaService;
 
     @GetMapping
-    public ResponseEntity<List<Tarea>> getAllTareas(
+    public ResponseEntity<?> getAllTareas(
             @RequestParam(required = false) Estado estado,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaLimite) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaLimite,
+            @RequestParam(required = false) Boolean fueraDePlazo) {
 
-        List<Tarea> tareas = tareaService.getAllTareas(estado, fechaLimite);
+        // TODO: por ahora, para limitar la logica
+        if (estado != null && fechaLimite != null) {
+            return ResponseEntity.badRequest().body("Cannot provide both 'estado' and 'fechaLimite' query parameters");
+        } else if (fueraDePlazo && fechaLimite != null) {
+            return ResponseEntity.badRequest()
+                    .body("Cannot provide both 'fueraDePlazo' and 'fechaLimite' query parameters");
+        } else if (fueraDePlazo && estado != null) {
+            return ResponseEntity.badRequest().body("Cannot provide both 'fueraDePlazo' and 'estado' query parameters");
+        }
+
+        List<Tarea> tareas = tareaService.getAllTareas(estado, fechaLimite, fueraDePlazo);
         return ResponseEntity.ok(tareas);
     }
 

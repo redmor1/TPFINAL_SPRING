@@ -21,4 +21,6 @@ public interface TareaRepository extends JpaRepository<Tarea, Long> {
     public List<Tarea> findByEstado(Estado estado);
 
     public List<Tarea> findByFechaLimite(LocalDate fechaLimite);
+
+    public List<Tarea> findByEstadoAndFechaLimiteBefore(Estado estado, LocalDate fechaLimite);
 }

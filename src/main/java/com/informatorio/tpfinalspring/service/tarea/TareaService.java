@@ -20,7 +20,7 @@ public interface TareaService {
 
     public void updateEstadoInTarea(Long tareaId, Estado estado);
 
-    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite);
+    public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite, Boolean fueraDePlazo);
 
     public Optional<List<TareaResponseDTO>> getAllTareasFromJuego(Long juegoId);
 }
