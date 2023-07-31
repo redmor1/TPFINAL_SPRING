@@ -1,11 +1,12 @@
 package com.informatorio.tpfinalspring.controller.juego;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.informatorio.tpfinalspring.domain.Juego;
-
+import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.model.dto.desarrollador.DesarrolladorResponseDTO;
 import com.informatorio.tpfinalspring.model.dto.juego.JuegoDTO;
 import com.informatorio.tpfinalspring.model.dto.juego.JuegoResponseDTO;
@@ -53,16 +55,21 @@ public class JuegoController {
     @GetMapping("/{juegoId}/desarrolladores")
     public List<DesarrolladorResponseDTO> getAllDesarrolladoresFromJuego(@PathVariable(value = "juegoId") Long juegoId)
             throws NotFoundException {
-        return juegoService.getAllDesarrolladoresFromJuego(juegoId).orElseThrow(NotFoundException::new);
+        return juegoService.getAllDesarrolladoresFromJuego(juegoId)
+                .orElseThrow(NotFoundException::new);
     }
 
     @PutMapping("/{juegoId}/desarrolladores/{desarrolladorId}")
     public ResponseEntity putDesarrolladorInJuego(
             @PathVariable Long juegoId,
-            @PathVariable Long desarrolladorId) {
-        juegoService.putDesarrolladorInJuego(juegoId, desarrolladorId);
+            @PathVariable Long desarrolladorId) throws NotFoundException {
+        Optional<JuegoResponseDTO> juego = juegoService.putDesarrolladorInJuego(juegoId, desarrolladorId);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        if (juego.isEmpty()) {
+            throw new NotFoundException();
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
 
     }
 

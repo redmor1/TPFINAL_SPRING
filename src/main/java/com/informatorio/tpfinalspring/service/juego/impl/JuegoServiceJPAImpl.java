@@ -90,20 +90,16 @@ public class JuegoServiceJPAImpl implements JuegoService {
     }
 
     @Override
-    public void putDesarrolladorInJuego(Long juegoId, Long desarrolladorId) {
+    public Optional<JuegoResponseDTO> putDesarrolladorInJuego(Long juegoId, Long desarrolladorId) {
         Optional<Juego> juegoSelected = juegoRepository.findById(juegoId);
         Optional<Desarrollador> desarrolladorSelected = desarrolladorRepository.findById(desarrolladorId);
-        // TODO: revisar la logica aca y ver q devolver
         if (juegoSelected.isPresent() && desarrolladorSelected.isPresent()) {
             if (!juegoSelected.get().getDesarrolladores().contains(desarrolladorSelected.get()))
                 juegoSelected.get().getDesarrolladores().add(desarrolladorSelected.get());
             juegoRepository.save(juegoSelected.get());
+            return Optional.of(juegoResponseMapper.convertJuegoToJuegoResponseDTO(juegoSelected.get()));
         } else {
-            if (!juegoSelected.isPresent()) {
-                throw new EntityNotFoundException("Juego with ID " + juegoId + " not found");
-            } else {
-                throw new EntityNotFoundException("Desarrollador with ID " + desarrolladorId + " not found");
-            }
+            return Optional.empty();
         }
 
     }
