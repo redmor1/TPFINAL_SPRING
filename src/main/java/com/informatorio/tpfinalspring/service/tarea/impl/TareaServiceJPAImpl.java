@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import com.informatorio.tpfinalspring.domain.Desarrollador;
 import com.informatorio.tpfinalspring.domain.Juego;
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.domain.Tarea.Estado;
+import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.mapper.tarea.TareaMapper;
 import com.informatorio.tpfinalspring.mapper.tarea.TareaResponseMapper;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
@@ -38,7 +38,7 @@ public class TareaServiceJPAImpl implements TareaService {
     TareaResponseMapper tareaResponseMapper;
 
     @Override
-    public Tarea createTareaWithJuegoAndDesarrollador(Long juegoId, Long desarrolladorId, TareaDTO tareaDTO)
+    public TareaResponseDTO createTareaWithJuegoAndDesarrollador(Long juegoId, Long desarrolladorId, TareaDTO tareaDTO)
             throws NotFoundException {
 
         Tarea tarea = tareaMapper.convertTareaDTOtoTarea(tareaDTO);
@@ -49,7 +49,7 @@ public class TareaServiceJPAImpl implements TareaService {
             tarea.setDesarrolladorResponsable(desarrolladorSelected.get());
             tarea.setJuego(juegoSelected.get());
             tareaRepository.save(tarea);
-            return tarea;
+            return tareaResponseMapper.convertTareaToTareaResponseDTO(tarea);
         } else {
             throw new NotFoundException();
         }

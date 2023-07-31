@@ -4,16 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.domain.Tarea.Estado;
+import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaResponseDTO;
 
 public interface TareaService {
 
-    public Tarea createTareaWithJuegoAndDesarrollador(Long juegoId, Long desarrolladorId, TareaDTO tareaDTO)
+    public TareaResponseDTO createTareaWithJuegoAndDesarrollador(Long juegoId, Long desarrolladorId, TareaDTO tareaDTO)
             throws NotFoundException;
 
     public Optional<List<TareaResponseDTO>> getAllTareasFromDesarrollador(Long desarrolladorId);

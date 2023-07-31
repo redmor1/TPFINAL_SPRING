@@ -56,21 +56,18 @@ public class TareaController {
         return ResponseEntity.ok(tareas);
     }
 
-    // @PostMapping("/juego/{juegoId}/desarrollador/{desarrolladorId}")
-    // public ResponseEntity<Tarea>
-    // createTareaWithJuegoAndDesarrollador(@PathVariable Long juegoId,
-    // @PathVariable Long desarrolladorId, @RequestBody TareaDTO tareaDTO) throws
-    // NotFoundException {
-    // Tarea tareaCreated =
-    // tareaService.createTareaWithJuegoAndDesarrollador(juegoId, desarrolladorId,
-    // tareaDTO);
+    @PostMapping("/juego/{juegoId}/desarrollador/{desarrolladorId}")
+    public ResponseEntity createTareaWithJuegoAndDesarrollador(@PathVariable Long juegoId,
+            @PathVariable Long desarrolladorId, @RequestBody TareaDTO tareaDTO) throws NotFoundException {
+        TareaResponseDTO tareaCreated = tareaService.createTareaWithJuegoAndDesarrollador(juegoId, desarrolladorId,
+                tareaDTO);
 
-    // HttpHeaders headers = new HttpHeaders();
-    // headers.add("Location", "api/tarea")
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "api/v1/tarea/" + tareaCreated.getId());
 
-    // return new ResponseEntity(tareaCreated, HttpStatus.CREATED);
+        return new ResponseEntity(headers, HttpStatus.CREATED);
 
-    // }
+    }
 
     @GetMapping("/{tareaId}")
     public TareaResponseDTO getTarea(@PathVariable(value = "tareaId") Long tareaId) throws NotFoundException {
