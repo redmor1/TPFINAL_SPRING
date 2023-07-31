@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.informatorio.tpfinalspring.domain.Tarea;
 import com.informatorio.tpfinalspring.domain.Tarea.Estado;
+import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaEstadoDTO;
 import com.informatorio.tpfinalspring.model.dto.tarea.TareaResponseDTO;
@@ -55,13 +56,25 @@ public class TareaController {
         return ResponseEntity.ok(tareas);
     }
 
-    @PostMapping("/juego/{juegoId}/desarrollador/{desarrolladorId}")
-    public ResponseEntity<Tarea> createTareaWithJuegoAndDesarrollador(@PathVariable Long juegoId,
-            @PathVariable Long desarrolladorId, @RequestBody TareaDTO tareaDTO) throws NotFoundException {
-        Tarea tareaCreated = tareaService.createTareaWithJuegoAndDesarrollador(juegoId, desarrolladorId, tareaDTO);
+    // @PostMapping("/juego/{juegoId}/desarrollador/{desarrolladorId}")
+    // public ResponseEntity<Tarea>
+    // createTareaWithJuegoAndDesarrollador(@PathVariable Long juegoId,
+    // @PathVariable Long desarrolladorId, @RequestBody TareaDTO tareaDTO) throws
+    // NotFoundException {
+    // Tarea tareaCreated =
+    // tareaService.createTareaWithJuegoAndDesarrollador(juegoId, desarrolladorId,
+    // tareaDTO);
 
-        return new ResponseEntity(tareaCreated, HttpStatus.CREATED);
+    // HttpHeaders headers = new HttpHeaders();
+    // headers.add("Location", "api/tarea")
 
+    // return new ResponseEntity(tareaCreated, HttpStatus.CREATED);
+
+    // }
+
+    @GetMapping("/{tareaId}")
+    public TareaResponseDTO getTarea(@PathVariable(value = "tareaId") Long tareaId) throws NotFoundException {
+        return tareaService.getTarea(tareaId).orElseThrow(NotFoundException::new);
     }
 
     @GetMapping("/desarrollador/{desarrolladorId}")

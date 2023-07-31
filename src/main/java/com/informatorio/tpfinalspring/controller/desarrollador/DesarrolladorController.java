@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.informatorio.tpfinalspring.domain.Desarrollador;
 import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.model.dto.desarrollador.DesarrolladorDTO;
 import com.informatorio.tpfinalspring.model.dto.desarrollador.DesarrolladorResponseDTO;

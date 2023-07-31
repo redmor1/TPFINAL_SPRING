@@ -23,4 +23,6 @@ public interface TareaService {
     public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite, Boolean fueraDePlazo);
 
     public Optional<List<TareaResponseDTO>> getAllTareasFromJuego(Long juegoId);
+
+    public Optional<TareaResponseDTO> getTarea(Long tareaId);
 }

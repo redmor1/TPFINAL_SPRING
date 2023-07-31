@@ -24,7 +24,6 @@ import com.informatorio.tpfinalspring.repository.tarea.TareaRepository;
 import com.informatorio.tpfinalspring.service.tarea.TareaService;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -134,6 +133,16 @@ public class TareaServiceJPAImpl implements TareaService {
 
             return Optional.of(tareaResponseDTOs);
 
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<TareaResponseDTO> getTarea(Long tareaId) {
+        Optional<Tarea> tareaSelected = tareaRepository.findById(tareaId);
+        if (tareaSelected.isPresent()) {
+            return Optional.of(tareaResponseMapper.convertTareaToTareaResponseDTO(tareaSelected.get()));
         } else {
             return Optional.empty();
         }
