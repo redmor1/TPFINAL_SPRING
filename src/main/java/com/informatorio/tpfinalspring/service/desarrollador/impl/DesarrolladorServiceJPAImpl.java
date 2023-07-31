@@ -27,13 +27,13 @@ public class DesarrolladorServiceJPAImpl implements DesarrolladorService {
     DesarrolladorRepository desarrolladorRepository;
 
     @Override
-    public Desarrollador createDesarrollador(DesarrolladorDTO desarrollador) {
+    public DesarrolladorResponseDTO createDesarrollador(DesarrolladorDTO desarrollador) {
 
         Desarrollador desarrolladorCreated = desarrolladorMapper.convertDesarrolladorDTOToDesarrollador(desarrollador);
 
         desarrolladorRepository.save(desarrolladorCreated);
 
-        return desarrolladorCreated;
+        return (desarrolladorResponseMapper.convertDesarrolladorToDesarrolladorResponseDTO(desarrolladorCreated));
     }
 
     @Override

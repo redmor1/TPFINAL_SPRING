@@ -32,11 +32,11 @@ public class DesarrolladorController {
 
     @PostMapping
     public ResponseEntity createDesarrollador(@RequestBody DesarrolladorDTO desarrolladorDTO) {
-        Desarrollador desarrolladorCreated = desarrolladorService.createDesarrollador(desarrolladorDTO);
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.add("Location", "/")
+        DesarrolladorResponseDTO desarrolladorCreated = desarrolladorService.createDesarrollador(desarrolladorDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/v1/desarrolladores/" + desarrolladorCreated.getId());
 
-        return new ResponseEntity(desarrolladorCreated, HttpStatus.CREATED);
+        return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/{desarrolladorId}")
