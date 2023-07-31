@@ -2,6 +2,7 @@ package com.informatorio.tpfinalspring.controller.tarea;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -87,9 +88,15 @@ public class TareaController {
     }
 
     @PutMapping("/{tareaId}/estado")
-    public ResponseEntity updateEstadoInTarea(@PathVariable Long tareaId, @RequestBody TareaEstadoDTO tareaEstadoDTO) {
-        tareaService.updateEstadoInTarea(tareaId, tareaEstadoDTO.getEstado());
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    public ResponseEntity updateEstadoInTarea(@PathVariable Long tareaId, @RequestBody TareaEstadoDTO tareaEstadoDTO)
+            throws NotFoundException {
+        Optional<TareaResponseDTO> tarea = tareaService.updateEstadoInTarea(tareaId, tareaEstadoDTO.getEstado());
+        if (tarea.isEmpty()) {
+            throw new NotFoundException();
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+
     }
 
 }

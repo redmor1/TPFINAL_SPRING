@@ -17,7 +17,7 @@ public interface TareaService {
 
     public Optional<List<TareaResponseDTO>> getAllTareasFromDesarrollador(Long desarrolladorId);
 
-    public void updateEstadoInTarea(Long tareaId, Estado estado);
+    public Optional<TareaResponseDTO> updateEstadoInTarea(Long tareaId, Estado estado);
 
     public List<Tarea> getAllTareas(Estado estado, LocalDate fechaLimite, Boolean fueraDePlazo);
 

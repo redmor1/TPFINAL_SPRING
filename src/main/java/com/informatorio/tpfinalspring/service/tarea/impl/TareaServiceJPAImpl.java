@@ -77,14 +77,15 @@ public class TareaServiceJPAImpl implements TareaService {
     }
 
     @Override
-    public void updateEstadoInTarea(Long tareaId, Estado estado) {
-        // TODO: revisar la logica aca y ver q hay q devolver
+    public Optional<TareaResponseDTO> updateEstadoInTarea(Long tareaId, Estado estado) {
+
         Optional<Tarea> tareaSelected = tareaRepository.findById(tareaId);
         if (tareaSelected.isPresent()) {
             tareaSelected.get().setEstado(estado);
             tareaRepository.save(tareaSelected.get());
+            return Optional.of(tareaResponseMapper.convertTareaToTareaResponseDTO(tareaSelected.get()));
         } else {
-            throw new EntityNotFoundException("Tarea with ID " + tareaId + " not found");
+            return Optional.empty();
         }
     }
 
