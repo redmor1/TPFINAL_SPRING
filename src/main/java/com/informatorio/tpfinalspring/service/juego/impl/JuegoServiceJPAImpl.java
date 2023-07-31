@@ -35,10 +35,10 @@ public class JuegoServiceJPAImpl implements JuegoService {
     DesarrolladorResponseMapper desarrolladorResponseMapper;
 
     @Override
-    public Juego createJuego(JuegoDTO juego) {
+    public JuegoResponseDTO createJuego(JuegoDTO juego) {
         Juego juegoCreated = juegoMapper.convertJuegoDTOToJuego(juego);
         juegoRepository.save(juegoCreated);
-        return juegoCreated;
+        return juegoResponseMapper.convertJuegoToJuegoResponseDTO(juegoCreated);
     }
 
     @Override

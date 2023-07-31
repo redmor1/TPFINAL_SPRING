@@ -37,7 +37,7 @@ public class JuegoController {
 
     @PostMapping
     public ResponseEntity createJuego(@RequestBody JuegoDTO juego) {
-        Juego juegoCreated = juegoService.createJuego(juego);
+        JuegoResponseDTO juegoCreated = juegoService.createJuego(juego);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/juegos/" + juegoCreated.getId());
