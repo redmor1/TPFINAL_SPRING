@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +36,17 @@ public class JuegoController {
     JuegoService juegoService;
 
     @PostMapping
-    public ResponseEntity<Juego> createJuego(@RequestBody JuegoDTO juego) {
+    public ResponseEntity createJuego(@RequestBody JuegoDTO juego) {
         Juego juegoCreated = juegoService.createJuego(juego);
 
-        return new ResponseEntity(juegoCreated, HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/v1/juegos/" + juegoCreated.getId());
+        return new ResponseEntity(headers, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{juegoId}")
+    public JuegoResponseDTO getJuego(@PathVariable(value = "juegoId") Long juegoId) throws NotFoundException {
+        return juegoService.getJuego(juegoId).orElseThrow(NotFoundException::new);
     }
 
     @GetMapping(params = "status=developing")

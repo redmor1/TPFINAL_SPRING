@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.informatorio.tpfinalspring.domain.Desarrollador;
 import com.informatorio.tpfinalspring.domain.Juego;
+import com.informatorio.tpfinalspring.exceptions.NotFoundException;
 import com.informatorio.tpfinalspring.mapper.desarrollador.DesarrolladorResponseMapper;
 import com.informatorio.tpfinalspring.mapper.juego.JuegoMapper;
 import com.informatorio.tpfinalspring.mapper.juego.JuegoResponseMapper;
@@ -21,7 +21,6 @@ import com.informatorio.tpfinalspring.repository.desarrollador.DesarrolladorRepo
 import com.informatorio.tpfinalspring.repository.juego.JuegoRepository;
 import com.informatorio.tpfinalspring.service.juego.JuegoService;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -102,6 +101,18 @@ public class JuegoServiceJPAImpl implements JuegoService {
             return Optional.empty();
         }
 
+    }
+
+    @Override
+    public Optional<JuegoResponseDTO> getJuego(Long juegoId) {
+        Optional<Juego> juegoSelected = juegoRepository.findById(juegoId);
+
+        if (juegoSelected.isPresent()) {
+            return Optional.of(juegoResponseMapper.convertJuegoToJuegoResponseDTO(juegoSelected.get()));
+        } else {
+            return Optional.empty();
+
+        }
     }
 
 }
