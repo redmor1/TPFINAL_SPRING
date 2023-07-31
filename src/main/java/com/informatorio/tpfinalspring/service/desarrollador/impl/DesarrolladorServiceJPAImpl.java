@@ -2,6 +2,7 @@ package com.informatorio.tpfinalspring.service.desarrollador.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,18 @@ public class DesarrolladorServiceJPAImpl implements DesarrolladorService {
         }
 
         return desarrolladoresResponseDTOs;
+    }
+
+    @Override
+    public Optional<DesarrolladorResponseDTO> getDesarrollador(Long desarrolladorId) {
+        Optional<Desarrollador> desarrolladorSelected = desarrolladorRepository.findById(desarrolladorId);
+
+        if (desarrolladorSelected.isPresent()) {
+            return Optional.of(desarrolladorResponseMapper
+                    .convertDesarrolladorToDesarrolladorResponseDTO(desarrolladorSelected.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 
 }
